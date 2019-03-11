@@ -3,7 +3,7 @@
 Taking the previous example further, let's say that after each save, we want to dispatch some action
 to notify the Store that the fetch has succeeded (we'll omit the failure case for the moment).
 
-继续前面的例子，我们希望每次在 fetch 成功之后向 Store dispatch 一个 action 通知它进行保存（目前未对请求失败的情况做处理）。
+继续前面的例子，我们希望每次在 fetch 成功之后向 Store dispatch 一个 action 用于通知它进行保存（目前未对请求失败的情况做处理）。
 
 We could pass the Store's `dispatch` function to the Generator. Then the
 Generator could invoke it after receiving the fetch response:
@@ -50,7 +50,7 @@ function* fetchProducts() {
 
 Now, we can test the Generator easily as in the previous section
 
-现在我们又可以像上一章节提到的那样来轻松地测试 Generator 了。
+现在我们又可以像上一章节提到的那样轻松地对 Generator 进行测试了。
 
 ```javascript
 import { call, put } from 'redux-saga/effects'

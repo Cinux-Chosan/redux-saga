@@ -114,7 +114,7 @@ function* fetchProducts() {
 
 We're using now the `call(fn, ...args)` function. **The difference from the preceding example is that now we're not executing the fetch call immediately, instead, `call` creates a description of the effect**. Just as in Redux you use action creators to create a plain object describing the action that will get executed by the Store, `call` creates a plain object describing the function call. The redux-saga middleware takes care of executing the function call and resuming the generator with the resolved response.
 
-我们现在使用 `call(fn, ...args)` 函数。**与前面的示例不同的是现在我们并没有立即执行 fetch 调用，而是用 `call` 来创建了一个 Effect 描述。**就跟在 Redux 中用 action 创建器创建一个用来被 Store 执行的 action 对象一样，`call` 创建了一个纯对象用于描述需要执行的函数调用。redux-saga 中间件会接管该函数的调用并在收到响应时恢复 Generator。
+我们现在使用 `call(fn, ...args)` 函数。 **与前面的示例不同的是现在我们并没有立即执行 fetch 调用，而是用 `call` 来创建了一个 Effect 描述。** 就跟在 Redux 中用 action 创建器创建一个用来被 Store 执行的 action 对象一样，`call` 创建了一个纯对象用于描述需要执行的函数调用。redux-saga 中间件会接管该函数的调用并把收到的响应用于恢复 Generator。
 
 This allows us to easily test the Generator outside the Redux environment. Because `call` is just a function which returns a plain Object.
 
@@ -140,11 +140,11 @@ Now we don't need to mock anything, and a basic equality test will suffice.
 
 The advantage of those *declarative calls* is that we can test all the logic inside a Saga by iterating over the Generator and doing a `deepEqual` test on the values yielded successively. This is a real benefit, as your complex asynchronous operations are no longer black boxes, and you can test in detail their operational logic no matter how complex it is.
 
-**声明性调用**的好处是我们可以成功的通过在 Saga 中迭代 Generator 并对这些返回值使用 `deepEqual` 来进行测试。这样做真的很有好处，因为那些复杂的异步调用操作对你来说不再是黑盒子，并且不管它的操作逻辑有多复杂你都可以对它进行详细的测试。
+**声明性调用**的好处是我们可以成功的通过迭代 Generator 并对这些返回值使用 `deepEqual` 来对 Saga 中的逻辑进行测试。这样做真的很有好处，因为那些复杂的异步调用操作对你来说不再是黑盒子，并且不管它的操作逻辑有多复杂你都可以对它进行详细的测试。
 
 `call` also supports invoking object methods, you can provide a `this` context to the invoked functions using the following form:
 
-`call` 也支持调用对象方法，你可以向下面这样给它提供一个 `this` 作为上下文： 
+`call` 也支持调用对象的方法，你可以向下面这样给它提供一个 `this` 作为上下文： 
 
 ```javascript
 yield call([obj, obj.method], arg1, arg2, ...) // as if we did obj.method(arg1, arg2 ...)
@@ -160,7 +160,7 @@ yield apply(obj, obj.method, [arg1, arg2, ...])
 
 `call` and `apply` are well suited for functions that return Promise results. Another function `cps` can be used to handle Node style functions (e.g. `fn(...args, callback)` where `callback` is of the form `(error, result) => ()`). `cps` stands for Continuation Passing Style.
 
-`call` 和 `apply` 都非常适合返回 Promise 的函数调用。另一个函数 `cps` 可以用于处理 Node 形式的函数 (即 `fn(...args, callback)`，其 `callback` 是 `(error, result) => ()` 这种格式）
+`call` 和 `apply` 都非常适合返回 Promise 的函数调用。另一个函数 `cps` 可以用于处理 Node 形式的函数 (即 `fn(...args, callback)`，其中 `callback` 是 `(error, result) => ()` 这种格式）
 
 For example:
 

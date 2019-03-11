@@ -89,7 +89,7 @@ Errors in forked tasks [bubble up to their parents](../api/README.md#error-propa
 until it is caught or reaches the root saga.
 If an error propagates to the root saga the whole saga tree is already **terminated**. The preferred approach, in this case, to use [onError hook](../api/README.md#error-propagation#createsagamiddlewareoptions) to report an exception, inform a user about the problem and gracefully terminate your app.
 
-这些任务分叉中出现的错误会[冒泡到父级](../api/README.md#error-propagation) 直到被捕获或到达根 saga。如果一个错误冒泡到根 saga 则整个 saga 树**已经终止**。这种情况下首选方式就是使用 [onError hook](../api/README.md#error-propagation#createsagamiddlewareoptions) 来报告异常，告诉用户发生了什么问题然后优雅的终止你的应用。
+这些任务分叉中出现的错误会[冒泡到父级](../api/README.md#error-propagation) 直到被捕获或到达根 saga。如果一个错误冒泡到根 saga 则整个 saga 树**已经终止**。这种情况下首选方式就是使用 [onError hook](../api/README.md#error-propagation#createsagamiddlewareoptions) 来报告异常，告诉用户发生了什么问题并优雅地终止你的应用。
 
 Why I cannot use `onError` hook as a global error handler?
 Usually, there is no one-size-fits-all solution, as exceptions are context dependent. Consider `onError` hook as the last resort that helps you to handle **unexpected** errors.

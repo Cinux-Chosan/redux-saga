@@ -2,7 +2,7 @@
 
 To generalize, triggering Side Effects from inside a Saga is always done by yielding some declarative Effect. (You can also yield Promise directly, but this will make testing difficult as we saw in the first section.)
 
-总的来说，在 Sava 内部要触发一个具有副作用的操作始终应该通过 yield 对应的声明性 Effect 来做。（你也可以直接 yield Promise，但这么做会使得测试变得相当困难，就像我们在第一章节中看到的那样。）
+总的来说，在 Saga 内部要触发一个具有副作用的操作始终应该通过 yield 与之对应的声明性 Effect 来做。（你也可以直接 yield Promise，但这么做会使得测试变得相当困难，就像我们在第一章节中看到的那样。）
 
 What a Saga does is actually compose all those Effects together to implement the desired control flow. The most basic example is to sequence yielded Effects by putting the yields one after another. You can also use the familiar control flow operators (`if`, `while`, `for`) to implement more sophisticated control flows.
 
