@@ -1,4 +1,4 @@
-# Composing Sagas（未校验）
+# Composing Sagas
 
 While using `yield*` provides an idiomatic way of composing Sagas, this approach has some limitations:
 
