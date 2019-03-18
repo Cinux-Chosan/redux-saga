@@ -17,7 +17,7 @@ Let's take a basic example of a Saga that watches all actions dispatched to the 
 
 Using `takeEvery('*')` (with the wildcard `*` pattern), we can catch all dispatched actions regardless of their types.
 
-使用 `takeEvery('*')` 可以捕获所有 actions，不管它们的 type 是何种类型。
+使用 `takeEvery('*')` 可以捕获所有 actions，不管它们的 type 是什么。
 
 ```javascript
 import { select, takeEvery } from 'redux-saga/effects'
