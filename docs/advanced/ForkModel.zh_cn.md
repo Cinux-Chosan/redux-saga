@@ -183,15 +183,21 @@ we can't catch the error directly from `fetchAll`. This is a rule of thumb, **yo
 in an attached fork will cause the forking parent to abort (Just like there is no way to catch an error *inside* a parallel Effect, only from
 outside by blocking on the parallel Effect).
 
-注意，我们能够在 `main` 中捕获从 `call(fetchAll)` 抛出的 error 是因为我们使用了阻塞调用（blocking call）。我们并不能捕获直接来自与 `fetchAll` 的 error。这是经验总结， **你不能捕获来自关联分支任务的 error** 。关联分支任务失败会导致父级终止（就像没有办法捕获并发 Effect 中的 error 一样，只能通过在外部阻塞并发 Effect 来完成）
+注意，我们能够在 `main` 中捕获从 `call(fetchAll)` 抛出的 error 是因为我们使用了阻塞调用（blocking call）。我们并不能捕获直接来自于 `fetchAll` 的 error。 **你不能捕获来自关联分支任务的 error** ，这是经验之谈。关联分支任务执行失败会导致父级被终止执行（就像没有办法捕获并发 Effect 中的 error 一样，只能通过在外部阻塞并发 Effect 来完成）
 
 ## Cancellation
 
 Cancelling a Saga causes the cancellation of:
 
+取消 Saga 会导致下面的也被取消：
+
 - The *main task* this means cancelling the current Effect where the Saga is blocked
 
+- *主任务* ，这意味着阻塞当前 Saga 的 Effect 会被取消
+
 - All attached forks that are still executing
+
+- 所有正在执行的关联分支任务
 
 
 **WIP**
@@ -202,7 +208,10 @@ Detached forks live in their own execution context. A parent doesn't wait for de
 errors from spawned tasks are not bubbled up to the parent. And cancelling a parent doesn't automatically cancel detached
 forks (you need to cancel them explicitly).
 
+独立分支任务有其自身的执行上下文。父级不会等待独立任务分支完成。使用 `spawn` 创建的任务抛出的 error 也不会冒泡到父级。取消父级也不会自动取消独立分支任务（你需要显式地取消它们）。
+
 In short, detached forks behave like root Sagas started directly using the `middleware.run` API.
 
+简而言之，独立分支任务表现得就像是使用 `middleware.run` 来启动的 root Saga 一样。 
 
 **WIP**
