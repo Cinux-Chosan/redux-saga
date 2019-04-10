@@ -10,11 +10,11 @@ The helper functions are built on top of the lower level API. In the advanced se
 
 The first function, `takeEvery` is the most familiar and provides a behavior similar to `redux-thunk`.
 
-第一个函数，也是我们最熟悉的一个函数 —— `takeEvery` ，它的行为类似于 `redux-thunk`。
+第一个函数，也是我们最熟悉的一个函数 —— `takeEvery` ，它提供了类似 `redux-thunk` 的行为。
 
 Let's illustrate with the common AJAX example. On each click on a Fetch button we dispatch a `FETCH_REQUESTED` action. We want to handle this action by launching a task that will fetch some data from the server.
 
-我们用一个普通的 AJAX 示例来进行讲解。每当 Fetch 按钮被点击时我们就发出（dispatch）一个 `FETCH_REQUESTED` action，在收到这个 action 时就启动一个从服务器获取数据的任务。
+我们用一个普通的 AJAX 示例来进行讲解。每当 Fetch 按钮被点击时我们就发出（dispatch）一个 `FETCH_REQUESTED` action。我们希望在收到这个 action 时就启动一个从服务器获取数据的任务。
 
 First we create the task that will perform the asynchronous action:
 
