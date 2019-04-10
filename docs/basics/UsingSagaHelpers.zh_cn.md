@@ -68,7 +68,7 @@ Unlike `takeEvery`, `takeLatest` allows only one `fetchData` task to run at any 
 If you have multiple Sagas watching for different actions, you can create multiple watchers with those built-in helpers, which will behave like there was `fork` used to spawn them (we'll talk about `fork` later. For now, consider it to be an Effect that allows us to start multiple sagas in the background).
 
 如果你需要多个 Saga 来对不同的 action 进行响应，你可以使用这些内置辅助函数来创建多个观察者（watchers），其行为如同是使用 `fork` 来创建它们那样（稍后我们会谈到 `fork`。现在只需要把它当做是一个可以在后台启动多个 saga 的 Effect）
-
+ 
 For example:
 
 例如：
