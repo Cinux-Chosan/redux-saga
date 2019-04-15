@@ -2,23 +2,23 @@
 
 In `redux-saga`, Sagas are implemented using Generator functions. To express the Saga logic, we yield plain JavaScript Objects from the Generator. We call those Objects [*Effects*](https://redux-saga.js.org/docs/api/#effect-creators). An Effect is an object that contains some information to be interpreted by the middleware. You can view Effects like instructions to the middleware to perform some operation (e.g., invoke some asynchronous function, dispatch an action to the store, etc.).
 
-在 `redux-saga` 中， Sagas 是通过 Generator 函数来实现的。为了让 Saga 的逻辑更简明，我们从 Generator 中 yield 出纯 JavaScript 对象。我们将这些对象称作 [*Effects*](https://redux-saga.js.org/docs/api/#effect-creators)。Effect 是一个包含了中间件需要识别和处理的信息的一个对象。你可以把 Effects 看做是指引中间件去完成相应操作的引导者（如调用异步函数，向 store dispatch action 等。）。
+在 `redux-saga` 中， Sagas 是通过 Generator 函数来实现的。为了更好的表达 Saga 的逻辑，我们从 Generator 中 yield 出纯 JavaScript 对象。我们将这些对象称作 [*Effects*](https://redux-saga.js.org/docs/api/#effect-creators)。Effect 是一个包含中间件需要识别和处理信息的对象。你可以把 Effect 看做是引领中间件去完成指定操作的引导人（如调用异步函数、向 store 发送 action 等。）。
 
 To create Effects, you use the functions provided by the library in the `redux-saga/effects` package.
 
-使用 `redux-saga/effects` 库提供的函数来创建 Effects。
+使用 `redux-saga/effects` 库提供的函数来创建 Effect。
 
 In this section and the following, we will introduce some basic Effects. And see how the concept allows the Sagas to be easily tested.
 
-在接下来的部分，我们将介绍一些基本的 Effects。并且你可以从中了解到这种概念（指 Effects）是如何让 Saga 变得易于测试的。
+在接下来的部分，我们将介绍一些基本的 Effect。并且你可以从中了解到这种概念（指 Effects）是如何使得 Saga 易于测试的。
 
 Sagas can yield Effects in multiple forms. The easiest way is to yield a Promise.
 
-Saga 可以通过多种格式 yield Effects。最简单的方式就是 yield 一个 Promise。
+Saga 能够以多种形式抛出（yield）Effect。最简单的方式就是抛出（yield）一个 Promise。
 
 For example suppose we have a Saga that watches a `PRODUCTS_REQUESTED` action. On each matching action, it starts a task to fetch a list of products from a server.
 
-假设我们有个监听 `PRODUCTS_REQUESTED` action 的 Saga。在每一个匹配的 action 发出时，它就会启动一个任务去从服务端获取产品列表数据。
+假设我们有个监听 `PRODUCTS_REQUESTED` action 的 Saga。（我们需要它）在每接收到一个匹配的 action 时，就启动一个任务去从服务端获取产品列表数据。
 
 ```javascript
 import { takeEvery } from 'redux-saga/effects'
@@ -36,7 +36,7 @@ function* fetchProducts() {
 
 In the example above, we are invoking `Api.fetch` directly from inside the Generator (In Generator functions, any expression at the right of `yield` is evaluated then the result is yielded to the caller).
 
-在上面的例子中，我们直接在 Generator 中调用了 `Api.fetch`（在 Generator 函数中，任何在 `yield` 右边的表达式都会在返回给调用者前被执行并把执行结果给生成器的调用者）。
+在上面的例子中，我们直接在 Generator 中调用了 `Api.fetch`（在 Generator 函数中，任何在 `yield` 右边的表达式都会在返回给调用者前被执行并把执行结果给 Generator 的调用者）。
 
 `Api.fetch('/products')` triggers an AJAX request and returns a Promise that will resolve with the resolved response, the AJAX request will be executed immediately. Simple and idiomatic, but...
 
@@ -50,6 +50,10 @@ Suppose we want to test the generator above:
 const iterator = fetchProducts()
 assert.deepEqual(iterator.next().value, ??) // what do we expect ?
 ```
+
+------------------------------------------------------------
+校验中...
+------------------------------------------------------------
 
 We want to check the result of the first value yielded by the generator. In our case it's the result of running `Api.fetch('/products')` which is a Promise . Executing the real service during tests is neither a viable nor practical approach, so we have to *mock* the `Api.fetch` function, i.e. we'll have to replace the real function with a fake one which doesn't actually run the AJAX request but only checks that we've called `Api.fetch` with the right arguments (`'/products'` in our case).
 
