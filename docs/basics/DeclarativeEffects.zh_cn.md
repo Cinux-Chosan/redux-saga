@@ -2,7 +2,7 @@
 
 In `redux-saga`, Sagas are implemented using Generator functions. To express the Saga logic, we yield plain JavaScript Objects from the Generator. We call those Objects [*Effects*](https://redux-saga.js.org/docs/api/#effect-creators). An Effect is an object that contains some information to be interpreted by the middleware. You can view Effects like instructions to the middleware to perform some operation (e.g., invoke some asynchronous function, dispatch an action to the store, etc.).
 
-在 `redux-saga` 中， Sagas 是通过 Generator 函数来实现的。为了更好的表达 Saga 的逻辑，我们从 Generator 中 yield 出纯 JavaScript 对象。我们将这些对象称作 [*Effects*](https://redux-saga.js.org/docs/api/#effect-creators)。Effect 是一个包含中间件需要识别和处理信息的对象。你可以把 Effect 看做是引领中间件去完成指定操作的引导人（如调用异步函数、向 store 发送 action 等。）。
+在 `redux-saga` 中， Sagas 是通过 Generator 函数来实现的。为了表达 Saga 的逻辑，我们从 Generator 中 yield 出纯 JavaScript 对象。我们将这些对象称作 [*Effects*](https://redux-saga.js.org/docs/api/#effect-creators)。Effect 是一个包含了中间件需要识别和处理信息的对象。你可以把 Effect 看做是引领中间件去完成指定操作的引导人（如引导它调用异步函数、向 store 发送 action 等。）。
 
 To create Effects, you use the functions provided by the library in the `redux-saga/effects` package.
 
@@ -36,11 +36,11 @@ function* fetchProducts() {
 
 In the example above, we are invoking `Api.fetch` directly from inside the Generator (In Generator functions, any expression at the right of `yield` is evaluated then the result is yielded to the caller).
 
-在上面的例子中，我们直接在 Generator 中调用了 `Api.fetch`（在 Generator 函数中，任何在 `yield` 右边的表达式都会在返回给调用者前被执行并把执行结果给 Generator 的调用者）。
+在上面的例子中，我们直接在 Generator 中调用了 `Api.fetch`（在 Generator 函数中，任何在 `yield` 右边的表达式都会在返回给调用者前被执行并把执行结果返回给 Generator 的调用者）。
 
 `Api.fetch('/products')` triggers an AJAX request and returns a Promise that will resolve with the resolved response, the AJAX request will be executed immediately. Simple and idiomatic, but...
 
-`Api.fetch('/products')` 发出一个 AJAX 请求并返回一个 Promise，AJAX 请求会被立即执行。这种做法既简单又符合我们的日常习惯，但是...
+`Api.fetch('/products')` 发出一个 AJAX 请求并返回一个 Promise，AJAX 请求会被立即执行。这种做法既简单又符合我们的思维惯性，但是...
 
 Suppose we want to test the generator above:
 
@@ -51,17 +51,17 @@ const iterator = fetchProducts()
 assert.deepEqual(iterator.next().value, ??) // what do we expect ?
 ```
 
-------------------------------------------------------------
-校验中...
-------------------------------------------------------------
-
 We want to check the result of the first value yielded by the generator. In our case it's the result of running `Api.fetch('/products')` which is a Promise . Executing the real service during tests is neither a viable nor practical approach, so we have to *mock* the `Api.fetch` function, i.e. we'll have to replace the real function with a fake one which doesn't actually run the AJAX request but only checks that we've called `Api.fetch` with the right arguments (`'/products'` in our case).
 
-我们希望检查生成器抛出的第一个值。在我们目前的情况下，它是 `Api.fetch('/products')` 返回的一个 Promise。由于我们只是在演示效果，并没有必要真正的发送一个 AJAX 请求，因此我们会*模拟* `Api.fetch` 函数，即我们用一个并没有真正发送 AJAX 请的而只检查提供给 `Api.fetch` 的参数（这里就是 `'/products'`）是否正确的假的 `Api.fetch`。
+我们希望对生成器抛出（yield）的第一个值进行检查。在我们目前的情况下，它是执行 `Api.fetch('/products')` 后返回的一个 Promise。在测试期间去执行真正的 service 既不可行也不切实际，因此我们会对 `Api.fetch` 函数进行 *模拟* ，即用一个假的 `Api.fetch` 来代替真实的 `Api.fetch`，这个假的 `Api.fetch` 不会去真正的发送 AJAX 请求，它需要做的就只是检查我们是否使用了正确的参数（这里的参数就是 `'/products'`）来调用 `Api.fetch`。
 
 Mocks make testing more difficult and less reliable. On the other hand, functions that return values are easier to test, since we can use a simple `equal()` to check the result. This is the way to write the most reliable tests.
 
-模拟使得测试变得困难又不可靠。另一方面，直接返回值的函数更易于测试，因为我们可以使用 `equal()` 来对结果进行检查。这也是编写可靠测试代码的一种方式。
+这样模拟使得测试变得困难又不可靠。另一方面，直接返回值的函数更易于测试，因为我们可以使用 `equal()` 对返回结果进行检查。这也是编写高可靠测试代码的一种方式。
+
+-------------------------
+待检查
+--------------------------
 
 Not convinced? I encourage you to read [Eric Elliott's article](https://medium.com/javascript-scene/what-every-unit-test-needs-f6cd34d9836d#.4ttnnzpgc):
 
