@@ -6,19 +6,19 @@
 
 The helper functions are built on top of the lower level API. In the advanced section, we'll see how those functions can be implemented.
 
-这些辅助函数都是底层 API 的封装。在高级部分，我们将看到它们是如何被实现的。
+这些辅助函数都是对底层 API 的封装。在高级部分，我们将看到它们是如何被实现的。
 
 The first function, `takeEvery` is the most familiar and provides a behavior similar to `redux-thunk`.
 
-第一个函数，也是我们最熟悉的一个函数 —— `takeEvery` ，它的行为类似于 `redux-thunk`。
+第一个函数，也是我们最熟悉的一个函数 —— `takeEvery` ，它提供了类似 `redux-thunk` 的行为。
 
 Let's illustrate with the common AJAX example. On each click on a Fetch button we dispatch a `FETCH_REQUESTED` action. We want to handle this action by launching a task that will fetch some data from the server.
 
-我们用最普通的 AJAX 示例来进行讲解。每当 Fetch 按钮被点击时我们就发出（dispatch）一个 `FETCH_REQUESTED` action。我们希望在收到这个 action 时就启动一个任务来从服务器获取一些数据。
+我们用一个普通的 AJAX 示例来进行讲解。每当 Fetch 按钮被点击时我们就发出（dispatch）一个 `FETCH_REQUESTED` action。我们希望在收到这个 action 时就启动一个从服务器获取数据的任务。
 
 First we create the task that will perform the asynchronous action:
 
-首先，我们创建一个用于处理异步 action 的任务：
+首先，我们创建一个用于执行异步 action 的任务：
 
 ```javascript
 import { call, put } from 'redux-saga/effects'
@@ -63,12 +63,12 @@ function* watchFetchData() {
 
 Unlike `takeEvery`, `takeLatest` allows only one `fetchData` task to run at any moment. And it will be the latest started task. If a previous task is still running when another `fetchData` task is started, the previous task will be automatically cancelled.
 
-和 `takeEvery` 不同，`takeLatest` 在同一时刻只能运行一个 `fetchData` 任务 —— 即最后启动的那个任务。如果在启动新的任务时前一个任务仍然在运行，则前一个任务会被自动取消。
+和 `takeEvery` 不同，`takeLatest` 在同一时刻只能运行一个 `fetchData` 任务 —— 即最后启动的那个任务。如果在启动新的任务时前一个任务仍然在运行，则会先自动取消前一个任务。
 
 If you have multiple Sagas watching for different actions, you can create multiple watchers with those built-in helpers, which will behave like there was `fork` used to spawn them (we'll talk about `fork` later. For now, consider it to be an Effect that allows us to start multiple sagas in the background).
 
-如果你需要多个 Saga 对不同的 action 进行响应，你可以使用这些内置辅助函数来创建多个观察者（watchers），其行为如同是使用 `fork` 来创建它们那样（稍后我们会谈到 `fork`。现在只需要把它当做是一个可以在后台启动多个 saga 的 Effect）
-
+如果你需要多个 Saga 来对不同的 action 进行响应，你可以使用这些内置辅助函数来创建多个观察者（watchers），其行为如同是使用 `fork` 来创建它们那样（稍后我们会谈到 `fork`。现在只需要把它当做是一个可以在后台启动多个 saga 的 Effect）
+ 
 For example:
 
 例如：
