@@ -2,15 +2,15 @@
 
 In `redux-saga`, Sagas are implemented using Generator functions. To express the Saga logic, we yield plain JavaScript Objects from the Generator. We call those Objects [*Effects*](https://redux-saga.js.org/docs/api/#effect-creators). An Effect is an object that contains some information to be interpreted by the middleware. You can view Effects like instructions to the middleware to perform some operation (e.g., invoke some asynchronous function, dispatch an action to the store, etc.).
 
-在 `redux-saga` 中， Sagas 是通过 Generator 函数来实现的。为了让 Saga 的逻辑更简明，我们从 Generator 中 yield 出纯 JavaScript 对象。我们将这些对象称作 [*Effects*](https://redux-saga.js.org/docs/api/#effect-creators)。Effect 是一个包含了中间件需要识别和处理的信息的一个对象。你可以把 Effects 看做是指引中间件去完成相应操作的引导者（如调用异步函数，向 store dispatch action 等。）。
+在 `redux-saga` 中，Saga 是通过 Generator 函数来实现的。为了让 Saga 的逻辑更简明，我们在 Generator 中 yield 纯 JavaScript 对象。我们将这些对象称作 [*Effects*](https://redux-saga.js.org/docs/api/#effect-creators)。一个 Effect 就是一个对象，但它是一个包含了需要被中间件解释和执行信息的对象。你可以把 Effect 看做是指引中间件去完成相应操作的引导人（如调用异步函数、向 store 派发（dispatch）action 等。）。
 
 To create Effects, you use the functions provided by the library in the `redux-saga/effects` package.
 
-使用 `redux-saga/effects` 库提供的函数来创建 Effects。
+使用 `redux-saga/effects` 库提供的函数来创建 Effect。
 
 In this section and the following, we will introduce some basic Effects. And see how the concept allows the Sagas to be easily tested.
 
-在接下来的部分，我们将介绍一些基本的 Effects。并且你可以从中了解到这种概念（指 Effects）是如何让 Saga 变得易于测试的。
+在接下来的部分，我们将介绍一些基本的 Effect。并且你可以从中了解到这种概念（指 Effects）是如何让 Saga 变得易于测试的。
 
 Sagas can yield Effects in multiple forms. The easiest way is to yield a Promise.
 
@@ -144,7 +144,7 @@ The advantage of those *declarative calls* is that we can test all the logic ins
 
 `call` also supports invoking object methods, you can provide a `this` context to the invoked functions using the following form:
 
-`call` 也支持调用对象的方法，你可以向下面这样给它提供一个 `this` 作为上下文： 
+`call` 也支持调用对象的方法，你可以向下面这样给它提供一个 `this` 作为上下文：
 
 ```javascript
 yield call([obj, obj.method], arg1, arg2, ...) // as if we did obj.method(arg1, arg2 ...)

@@ -1,4 +1,4 @@
-# Using Saga Helpers
+# Using Saga Helpers（已校验）
 
 `redux-saga` provides some helper effects wrapping internal functions to spawn tasks when some specific actions are dispatched to the Store.
 
