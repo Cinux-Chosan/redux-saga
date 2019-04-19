@@ -1,4 +1,4 @@
-# Dispatching actions to the store
+# Dispatching actions to the store（已校验）
 
 Taking the previous example further, let's say that after each save, we want to dispatch some action
 to notify the Store that the fetch has succeeded (we'll omit the failure case for the moment).
